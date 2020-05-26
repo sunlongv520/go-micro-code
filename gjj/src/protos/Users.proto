@@ -1,0 +1,12 @@
+syntax = "proto3";
+package  Users;
+
+service UserService {
+    rpc Test(UserRequest) returns (UserResponse) {}
+}
+message UserRequest {
+    string id = 1;
+}
+message UserResponse {
+    string ret = 2;
+}
