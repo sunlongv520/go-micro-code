@@ -3,21 +3,22 @@ package main
 import (
 	"github.com/micro/go-micro/v2"
 	"jtthink/src/Course"
+	"jtthink/src/service"
 
 	"log"
 )
 
 
 func main()  {
-	service:=micro.NewService(
+	cService:=micro.NewService(
 		micro.Name("api.jtthink.com.course"))
-	service.Init()
+	cService.Init()
 
-	err:=Course.RegisterCourseServiceHandler(service.Server(),Course.NewCourseServiceImpl())
+	err:=Course.RegisterCourseServiceHandler(cService.Server(),service.NewCourseServiceImpl())
 	if err!=nil{
 		log.Fatal(err)
 	}
-	if err = service.Run(); err != nil {
+	if err = cService.Run(); err != nil {
 		log.Println(err)
 	}
 }
