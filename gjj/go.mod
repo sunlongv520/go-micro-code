@@ -5,8 +5,9 @@ go 1.14
 require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/golang/protobuf v1.4.2
-	github.com/micro/go-micro/v2 v2.4.0
+	github.com/micro/go-micro/v2 v2.5.0
 	github.com/micro/micro v1.18.0 // indirect
+	github.com/micro/micro/v2 v2.5.0 // indirect
 	github.com/micro/protoc-gen-micro/v2 v2.0.0 // indirect
 	github.com/shopspring/decimal v1.2.0
 	golang.org/x/net v0.0.0-20200520182314-0ba52f642ac2 // indirect

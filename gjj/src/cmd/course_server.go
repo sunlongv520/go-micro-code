@@ -11,7 +11,7 @@ import (
 
 func main()  {
 	cService:=micro.NewService(
-		micro.Name("api.jtthink.com.course"))
+		micro.Name("go.micro.api.jtthink.course"))
 	cService.Init()
 
 	err:=Course.RegisterCourseServiceHandler(cService.Server(),service.NewCourseServiceImpl())

@@ -15,7 +15,7 @@ func main()  {
 	c:=grpc.NewClient()
 
 	service.HandleFunc("/test", func(writer http.ResponseWriter, request *http.Request) {
-		c:=Course.NewCourseService("api.jtthink.com.course",c)
+		c:=Course.NewCourseService("go.micro.api.jtthink.course",c)
 		course_rsp,_:=c.ListForTop(context.Background(),&Course.ListRequest{Size:10})
 		log.Println(course_rsp.Result)
 		writer.Write([]byte("http api test"))

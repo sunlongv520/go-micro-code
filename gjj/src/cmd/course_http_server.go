@@ -16,7 +16,7 @@ func main()  {
 
 	//web改成micro 就是grpc,并直接注册到etcd里面
 	service:=web.NewService(
-		web.Name("api.jtthink.com.http.course"),
+		web.Name("go.micro.api.http.course"),
 		web.Handler(r),
 	 )
 
