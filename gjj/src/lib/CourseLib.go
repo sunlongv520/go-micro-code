@@ -5,27 +5,18 @@ import (
 	"jtthink/framework/gin_"
 	"jtthink/src/Course"
 	"jtthink/src/service"
-
-	"log"
 )
 
 func init()  {
 	courseService:=service.NewCourseServiceImpl()
 	gin_.NewBuilder().WithService(courseService).
-		WithMiddleware(Test_Middleware()).
+		 WithMiddleware(Check_Middleware()).
 		WithEndpoint(Courselist_Endpoint(courseService)).
 		WithRequest(Courselist_Request()).
 		WithResponse(Course_Response()).Build("/test","GET")
 }
 
-func Test_Middleware()  gin_.Middleware {
-	return func(next gin_.Endpoint) gin_.Endpoint {
-		return func(context *gin.Context, request interface{}) (response interface{}, err error) {
-			log.Println("abc")
-			return next(context,request)
-		}
-	}
-}
+
 
 //获取列表相关
 func Courselist_Endpoint(c *service.CourseServiceImpl)   gin_.Endpoint {
