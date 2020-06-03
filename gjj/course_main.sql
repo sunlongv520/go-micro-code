@@ -21,15 +21,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for course_main
 -- ----------------------------
 DROP TABLE IF EXISTS `course_main`;
-CREATE TABLE `course_main`  (
+CREATE TABLE `course_main` (
   `course_id` int(11) NOT NULL AUTO_INCREMENT,
-  `course_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `course_disp_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `course_price` decimal(10, 2) NULL DEFAULT 0.00,
-  `course_price2` decimal(10, 0) NULL DEFAULT 0,
-  `addtime` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `course_name` varchar(50) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+  `course_disp_name` varchar(200) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+  `course_price` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `course_price2` decimal(10,0) NOT NULL DEFAULT '0',
+  `addtime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`course_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
+
 
 -- ----------------------------
 -- Records of course_main

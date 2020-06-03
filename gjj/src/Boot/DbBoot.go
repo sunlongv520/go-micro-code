@@ -8,14 +8,13 @@ import (
 
 //mysql相关
 var mysql_db *gorm.DB
-func Init(){
+func init(){
 	InitMysql()
 }
 
 func InitMysql() error {
 	var err error
-	mysql_db, err = gorm.Open("mysql",
-		 "root:root@(192.168.1.101:3306)/test?charset=utf8&parseTime=True&loc=Local")
+	mysql_db, err = gorm.Open("mysql", "root:root@tcp(192.168.2.239:3306)/test?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		mysql_db=nil
 		 return NewFatalError(err.Error()) //这里返回致命异常
