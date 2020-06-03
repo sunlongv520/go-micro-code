@@ -8,7 +8,7 @@ import (
 
 //mysql相关
 var mysql_db *gorm.DB
-func Init(){
+func init(){
 	InitMysql()
 }
 

@@ -1,0 +1,7 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+package  Course;
+message Timestamp {
+    google.protobuf.Timestamp timestamp = 1;
+    string timestr=2;
+}

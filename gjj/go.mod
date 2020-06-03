@@ -7,6 +7,7 @@ require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/golang/protobuf v1.4.2
 	github.com/jinzhu/gorm v1.9.12
+	github.com/micro/go-micro v1.18.0
 	github.com/micro/go-micro/v2 v2.5.0
 	github.com/micro/micro v1.18.0 // indirect
 	github.com/micro/micro/v2 v2.5.0 // indirect

@@ -6,14 +6,14 @@ package Course
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/golang/protobuf/ptypes/timestamp"
 	math "math"
 )
 
 import (
 	context "context"
-	client "github.com/micro/go-micro/client"
-	server "github.com/micro/go-micro/server"
+	api "github.com/micro/go-micro/v2/api"
+	client "github.com/micro/go-micro/v2/client"
+	server "github.com/micro/go-micro/v2/server"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -28,14 +28,22 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Reference imports to suppress errors if they are not otherwise used.
+var _ api.Endpoint
 var _ context.Context
 var _ client.Option
 var _ server.Option
+
+// Api Endpoints for CourseService service
+
+func NewCourseServiceEndpoints() []*api.Endpoint {
+	return []*api.Endpoint{}
+}
 
 // Client API for CourseService service
 
 type CourseService interface {
 	ListForTop(ctx context.Context, in *ListRequest, opts ...client.CallOption) (*ListResponse, error)
+	GetDetail(ctx context.Context, in *DetailRequest, opts ...client.CallOption) (*DetailResponse, error)
 }
 
 type courseService struct {
@@ -44,12 +52,6 @@ type courseService struct {
 }
 
 func NewCourseService(name string, c client.Client) CourseService {
-	if c == nil {
-		c = client.NewClient()
-	}
-	if len(name) == 0 {
-		name = "Course"
-	}
 	return &courseService{
 		c:    c,
 		name: name,
@@ -66,15 +68,27 @@ func (c *courseService) ListForTop(ctx context.Context, in *ListRequest, opts ..
 	return out, nil
 }
 
+func (c *courseService) GetDetail(ctx context.Context, in *DetailRequest, opts ...client.CallOption) (*DetailResponse, error) {
+	req := c.c.NewRequest(c.name, "CourseService.GetDetail", in)
+	out := new(DetailResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for CourseService service
 
 type CourseServiceHandler interface {
 	ListForTop(context.Context, *ListRequest, *ListResponse) error
+	GetDetail(context.Context, *DetailRequest, *DetailResponse) error
 }
 
 func RegisterCourseServiceHandler(s server.Server, hdlr CourseServiceHandler, opts ...server.HandlerOption) error {
 	type courseService interface {
 		ListForTop(ctx context.Context, in *ListRequest, out *ListResponse) error
+		GetDetail(ctx context.Context, in *DetailRequest, out *DetailResponse) error
 	}
 	type CourseService struct {
 		courseService
@@ -89,4 +103,8 @@ type courseServiceHandler struct {
 
 func (h *courseServiceHandler) ListForTop(ctx context.Context, in *ListRequest, out *ListResponse) error {
 	return h.CourseServiceHandler.ListForTop(ctx, in, out)
+}
+
+func (h *courseServiceHandler) GetDetail(ctx context.Context, in *DetailRequest, out *DetailResponse) error {
+	return h.CourseServiceHandler.GetDetail(ctx, in, out)
 }
