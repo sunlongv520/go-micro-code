@@ -1,0 +1,33 @@
+syntax = "proto3";
+import "Common.proto";
+package  Course;
+message CourseTopic{
+    int32 Id=1;
+    int32 CourseId=2;
+    int32 CourseDid=3;
+    int32 Likes=4;
+    int32 Unlikes=5;
+    string Title=6;
+    string Content=7;
+    int32 UserId=8;
+    Timestamp Addtime=9;
+    Timestamp Updatetime=10;
+}
+message CourseTopicReply{
+    int32 Id=1;
+    int32 TopicId=2;
+    string Content=3;
+    int32 UserId=4;
+    int32 Likes=5;
+    int32 Unlikes=6;
+    Timestamp Addtime=7;
+}
+message TopicRequest{
+    int32 CourseId=1;
+}
+message TopicResponse{
+    repeated CourseTopic result=1;
+}
+service CourseTopicService {
+    rpc GetTopic(TopicRequest) returns (TopicResponse);
+}

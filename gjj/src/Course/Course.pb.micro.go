@@ -6,7 +6,6 @@ package Course
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/golang/protobuf/ptypes/timestamp"
 	math "math"
 )
 
@@ -44,6 +43,7 @@ func NewCourseServiceEndpoints() []*api.Endpoint {
 
 type CourseService interface {
 	ListForTop(ctx context.Context, in *ListRequest, opts ...client.CallOption) (*ListResponse, error)
+	GetDetail(ctx context.Context, in *DetailRequest, opts ...client.CallOption) (*DetailResponse, error)
 }
 
 type courseService struct {
@@ -68,15 +68,27 @@ func (c *courseService) ListForTop(ctx context.Context, in *ListRequest, opts ..
 	return out, nil
 }
 
+func (c *courseService) GetDetail(ctx context.Context, in *DetailRequest, opts ...client.CallOption) (*DetailResponse, error) {
+	req := c.c.NewRequest(c.name, "CourseService.GetDetail", in)
+	out := new(DetailResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for CourseService service
 
 type CourseServiceHandler interface {
 	ListForTop(context.Context, *ListRequest, *ListResponse) error
+	GetDetail(context.Context, *DetailRequest, *DetailResponse) error
 }
 
 func RegisterCourseServiceHandler(s server.Server, hdlr CourseServiceHandler, opts ...server.HandlerOption) error {
 	type courseService interface {
 		ListForTop(ctx context.Context, in *ListRequest, out *ListResponse) error
+		GetDetail(ctx context.Context, in *DetailRequest, out *DetailResponse) error
 	}
 	type CourseService struct {
 		courseService
@@ -91,4 +103,8 @@ type courseServiceHandler struct {
 
 func (h *courseServiceHandler) ListForTop(ctx context.Context, in *ListRequest, out *ListResponse) error {
 	return h.CourseServiceHandler.ListForTop(ctx, in, out)
+}
+
+func (h *courseServiceHandler) GetDetail(ctx context.Context, in *DetailRequest, out *DetailResponse) error {
+	return h.CourseServiceHandler.GetDetail(ctx, in, out)
 }
