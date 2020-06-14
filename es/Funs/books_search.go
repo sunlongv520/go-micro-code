@@ -53,17 +53,16 @@ func SearchBook(ctx *gin.Context)  {
 		}
 	}
 
-
-
 	 boolMustQuery:=elastic.NewBoolQuery().Must(qList...)
 
 	rsp,err:=AppInit.GetEsClient().Search().Query(boolMustQuery).SortBy(sortList...).
+		From((searchModel.Current-1)*searchModel.Size).Size(searchModel.Size).
 		Index("books").Do(ctx)
 	log.Println(err)
 	if err!=nil{
 
 		ctx.JSON(500,gin.H{"error":err})
 	}else{
-		ctx.JSON(200,gin.H{"result":MapToBooks(rsp)})
+		ctx.JSON(200,gin.H{"result":MapToBooks(rsp),"metas":gin.H{"total":rsp.TotalHits()}})
 	}
 }
