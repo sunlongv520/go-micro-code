@@ -11,7 +11,6 @@ import (
 func main()  {
 
 	r:=gin.New()
-
 	gin_.BootStrap(r)
 
 	//web改成micro 就是grpc,并直接注册到etcd里面
